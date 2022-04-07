@@ -1,0 +1,72 @@
+{% extends "book/base.html" %}
+{% block content %}
+    <section class="vh-100">
+        <img class = "rounded-circle article-img" src = "{{ object.author.profile.image.url }}">
+        <div class="container py-10 h-100"></div>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+            <div class="card mb-3" style="border-radius: .5rem;">
+   
+                <div class="card-body p-4">
+                <h4>Details</h4>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                    <div class="col mb-3">
+                    <h5>Title: </h5> 
+                    <a1> {{ object.title }} </a>
+                    </div>
+                </div>
+
+                <div class="row pt-1">
+                    <div class="col mb-3">
+                    <h5>Author</h5> 
+                    <p>{{ object.author }}</p>
+                    </div>
+    
+                </div>                    
+                <div class="row pt-1">
+                    <div class="col mb-3">
+                    <h5>Date of publication</h5> 
+                    <p>{{ object.date_pub }}</p>
+                    </div>
+                </div>                    
+                <div class="row pt-1">
+                    <div class="col mb-3">
+                    <h5>ISBN number</h5> 
+                    <p>{{ object.number_ISBN }}</p>
+                    </div>
+                </div>                    
+                <div class="row pt-1">
+                    <div class="col mb-3">
+                    <h5>Pages</h5> 
+                    <p>{{ object.pages }}</p>
+                    </div>
+                </div>
+                <div class="row pt-1">
+                    <div class="col mb-3">
+                    <h5>Book cover</h5> 
+                    {% if book.book_covers == '' %}
+                        <p> - </p>
+                    {% else %}
+                        <p><a href = "{{ book.book_covers }}" target=blank> Link</a></p>
+                    {% endif %}
+
+                    </div>
+                </div>                    
+                <div class="row pt-1">
+                    <div class="col mb-3">
+                    <h5>Language</h5> 
+                    <p>{{ object.language }}</p>
+                    </div>
+                </div>
+                <div>
+                    <a class = "btn btn-secondary btn-sm mt-1 mb-1" href = "{% url 'book-update' object.id %}">Update</a>
+                    <a class = "btn btn-danger btn-sm mt-1 mb-1" href = "{% url 'book-delete' object.id %}">Delete</a>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+{% endblock content %}

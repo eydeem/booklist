@@ -1,0 +1,47 @@
+{% extends "book/base.html" %}
+{% block content %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Date of publication</th>
+            <th scope="col">ISBN number</th>
+            <th scope="col">Pages</th>
+            <th scope="col">Book covers</th>
+            <th scope="col">Language</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+        <tr> 
+            <a class="tableRow" href="#">
+
+                <td> <a href = "{% url 'book-detail' book.id %}">{{ book.title }}</a></td>
+
+                <td> {{ book.author }} </td>
+
+                <td>{{ book.date_pub }} </td>
+
+                <td>{{ book.number_ISBN }} </td>
+
+                <td>{{ book.pages }}</td>
+
+                {% if book.book_covers == '' %}
+                    <td> - </td>
+                {% else %}
+                    <td> <a href = "{{ book.book_covers }}" target=blank> Link </a></td>
+                {% endif %}
+
+                <td>{{ book.language }} </td>
+
+            </a>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+{% endblock content %}

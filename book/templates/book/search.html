@@ -1,0 +1,114 @@
+{% extends "book/base.html" %}
+{% block content %}
+
+    <h3>Search..</h3>
+    <form method="GET" action=".">
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0 border" type="search" name="title_contains" placeholder="Title contains..."/>
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0 border" type="search" name="author_contains" placeholder="Author contains..." />
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+        <!-- End Search 
+        <div class="input-group-append">
+            <button class="btn btn-lg">Search</button>
+        </div>-->
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0 border" type="search" name="language_contains" placeholder="Language contains...">
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div> 
+
+
+
+        <div class="form-row">
+
+            <div class="form-group col-md-2 col-lg-2">
+                <label for="publishDateMin">Publish date minimum</label>
+                <input type="date" class="form-control" id="publishDateMin" name="date_min">
+            </div>
+
+            <div class="form-group col-md-2 col-lg-2">
+                <label for="publishDateMax">Publish date maximum</label>
+                <input type="date" class="form-control" id="publishDateMax" name="date_max">
+            </div>
+
+        </div>
+ 
+        <button type="submit" class="btn btn-primary" value = 'Search '>Search</button>
+    </form>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Date of publication</th>
+                <th scope="col">ISBN number</th>
+                <th scope="col">Pages</th>
+                <th scope="col">Book covers</th>
+                <th scope="col">Language</th>
+            </tr>
+            </thead>
+            <tbody>         
+            {% if books is None %}
+                <h1>Brak wyników</h1>
+            {% else %}
+                {% for book in books %}
+    
+                <tr> 
+                    <a class="tableRow" href="#">
+        
+                        <td> <a href = "{% url 'book-detail' book.id %}">{{ book.title }}</a></td>
+        
+                        <td> {{ book.author }} </td>
+        
+                        <td>{{ book.date_pub }} </td>
+        
+                        <td>{{ book.number_ISBN }} </td>
+        
+                        <td>{{ book.pages }}</td>
+        
+                        {% if book.book_covers == '' %}
+                            <td> - </td>
+                        {% else %}
+                            <td> <a href = "{{ book.book_covers }}" target=blank> Link </a></td>
+                        {% endif %}
+        
+                        <td>{{ book.language }} </td>
+        
+                    </a>
+                </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+
+
+
+{% endblock content %}
