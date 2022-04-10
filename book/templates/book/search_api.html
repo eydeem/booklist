@@ -1,5 +1,7 @@
 {% extends "book/base.html" %}
+{% load crispy_forms_tags %} 
 {% block content %}
+
 
 
     <h3>Search..</h3>
@@ -8,22 +10,94 @@
             <div class="form-group col-12">
                 <div class="input-group">
                     <input class="form-control py-2 border-right-0 border" type="search" name="q" placeholder="Title contains..."/>
-                    <span class="input-group-append">
+                    <div class="input-group-append">
                         <div class="input-group-text bg-transparent">
                             <i class="fa fa-search"></i>
                         </div>
-                    </span>
+                    </div>
                 </div>
             </div>        
         </div>
         
+        <button type="submit" class="btn btn-primary" value = 'Search '>Search</button>
+
+
     </form>
 
 
-    {% for book in books %}
+    <table class="table">
+        <thead>
+        <tr class="table"> 
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Date of publication</th>
+            <th scope="col">ISBN number</th>
+            <th scope="col">Pages</th>
+            <th scope="col">Language</th>
+            <th scope="col">Link</th>
+        </tr>
+        </thead>
+        <tbody>
 
-        <h1>{{ book.title }}</h1>
 
-    {% endfor %}
+        
+        {% if books %}
+
+            {% for book in books %}
+            <tr>
+                <a class="tableRow" href="#">
+
+                    <form action="{% url 'search-api-bk' %}" method="post">
+                        {% csrf_token %}
+                    
+                        <td> <a name="title_i" >{{ book.title }}</a> </td> 
+                        <input type = 'hidden' name="title_i" value = "{{ book.title }}"></input>
+
+                        <td> <a name="authors_i" >{{ book.authors }}</a> </td> 
+                        <input type = 'hidden' name="authors_i" value = "{{ book.authors }}"></input>
+
+                        <td> <a name="publishedDate_i" >{{ book.publishedDate }}</a> </td> 
+                        <input type = 'hidden' name="publishedDate_i" value = "{{ book.publishedDate }}"></input>
+
+                        <td> <a name="isbns_i" >{{ book.isbns }}</a> </td> 
+                        <input type = 'hidden' name="isbns_i" value = "{{ book.isbns }}"></input>
+
+                        {% if book.pageCount %}
+                            <td> <a>{{ book.pageCount }}</a> </td> 
+                            <input type = 'hidden' name="pageCount_i" value = "{{ book.pageCount }}"></input>
+                        {% else %}
+                            <td> <a ></a> </td> 
+                            <input type = 'hidden' name="pageCount_i" value = 0 ></input>
+                        {% endif %}
+                        
+                        <td> <a name="language_i" >{{ book.language }}</a> </td> 
+                        <input type = 'hidden' name="language_i" value = "{{ book.language }}"></input>
+
+                        <td> <input type = 'hidden' name="thumbnail_i" value = "{{ book.imageLinks.thumbnail }}"></input>
+                            {% if book.imageLinks.thumbnail %}
+                                <a href = "{{ book.imageLinks.thumbnail }}" target=blank> Link </a>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <input type="submit" value="Save">
+                        </td>  
+
+                    </form>
+
+
+
+                </a>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <td>No result</td>
+        {% endif %}
+
+        
+
+        </tbody>
+    </table>
+
 
 {% endblock content %}

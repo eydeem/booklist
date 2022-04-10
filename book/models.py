@@ -5,9 +5,9 @@ from django.urls import reverse
 class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100) #moze zmienie typ na ForeignKey
-    date_pub = models.DateField(blank = True)
-    number_ISBN = models.IntegerField()
-    pages = models.IntegerField(blank = True)
+    date_pub = models.DateField()
+    number_ISBN = models.CharField(max_length=100)
+    pages = models.IntegerField(blank = True, default=0)
     book_covers = models.URLField(blank = True)
     language = models.CharField(max_length=100, blank = True)
 

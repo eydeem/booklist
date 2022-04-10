@@ -1,47 +1,74 @@
 {% extends "book/base.html" %}
 {% block content %}
 
+<body>
     <table class="table">
         <thead>
-        <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Author</th>
-            <th scope="col">Date of publication</th>
-            <th scope="col">ISBN number</th>
-            <th scope="col">Pages</th>
-            <th scope="col">Book covers</th>
-            <th scope="col">Language</th>
-        </tr>
+            <tr class="table">
+                <th scope="col">Title</th>
+                <th scope="col">Author</th>
+                <th scope="col">Date of publication</th>
+                <th scope="col">ISBN number</th>
+                <th scope="col">Pages</th>
+                <th scope="col">Book covers</th>
+                <th scope="col">Language</th>
+            </tr>
         </thead>
         <tbody>
-        {% for book in books %}
-        <tr> 
-            <a class="tableRow" href="#">
 
-                <td> <a href = "{% url 'book-detail' book.id %}">{{ book.title }}</a></td>
 
-                <td> {{ book.author }} </td>
+            {% for book in page_obj %}
 
-                <td>{{ book.date_pub }} </td>
+            <tr>
+                <a class="tableRow" href="#">
 
-                <td>{{ book.number_ISBN }} </td>
+                    <td> <a href="{% url 'book-detail' book.id %}">{{ book.title }}</a></td>
 
-                <td>{{ book.pages }}</td>
+                    <td> {{ book.author }} </td>
 
-                {% if book.book_covers == '' %}
-                    <td> - </td>
-                {% else %}
-                    <td> <a href = "{{ book.book_covers }}" target=blank> Link </a></td>
-                {% endif %}
+                    <td>{{ book.date_pub }} </td>
 
-                <td>{{ book.language }} </td>
+                    <td>{{ book.number_ISBN }} </td>
 
-            </a>
-        </tr>
-        {% endfor %}
+                    {% if book.pages == 0 %}
+                    <td> </td>
+                    {% else %}
+                    <td>{{ book.pages }}</td>
+                    {% endif %}
+
+                    <td>
+                        {% if book.book_covers %}
+                        <a href="{{ book.book_covers }}" target=blank> Link </a>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ book.language }} </td>
+
+                </a>
+            </tr>
+
+            {% endfor %}
+
 
         </tbody>
     </table>
+</body>
+<center>
+    {% if page_obj.has_previous %}
+    <a class="btn btn-outline-info mb-4 text-dark border-dark" href="?page=1">First</a>
+    <a class="btn btn-outline-info mb-4 text-dark border-dark"
+        href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span class="current">
+        <a class="btn btn-outline-info mb-4 text-dark border-dark">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</a>
+    </span>
+
+    {% if page_obj.has_next %}
+    <a class="btn btn-outline-info mb-4 text-dark border-dark" href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a class="btn btn-outline-info mb-4 text-dark border-dark" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+</center>
 
 
 {% endblock content %}

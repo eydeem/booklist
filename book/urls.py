@@ -9,6 +9,7 @@ urlpatterns = [
     path('book/<int:pk>/', BookDetailView.as_view(), name = 'book-detail'),
     path('book/<int:pk>/update/', BookUpdateView.as_view(), name = 'book-update'),
     path('book/<int:pk>/delete/', BookDeleteView.as_view(), name = 'book-delete'),
-    path('search_api/', views.search_api, name = 'search_api'),
+    path('search_api/', views.search_api, name = 'search-api'),
+    path('search_api_insert/', views.new_book , name = 'search-api-bk'),
 
 ]
