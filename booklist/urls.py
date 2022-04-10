@@ -21,4 +21,3 @@ urlpatterns = [
     path('', include('book.urls')),
 
 ]
-

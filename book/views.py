@@ -1,7 +1,13 @@
 from django.http import HttpResponse, HttpResponseRedirect
 import datetime
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import (
+    CreateView,
+    ListView,
+    DetailView,
+    UpdateView,
+    DeleteView
+)
 from .models import Book
 import requests
 
@@ -50,7 +56,7 @@ def BootStrapFilterView(request):
         bk = Book.objects.all()
         title_contains_query = request.GET.get('title_contains')
         author_contains_query = request.GET.get('author_contains')
-        language_contains_query = request.GET.get('language_contains')
+        lang_contains_query = request.GET.get('language_contains')
         date_min = request.GET.get('date_min')
         date_max = request.GET.get('date_max')
 
@@ -60,8 +66,8 @@ def BootStrapFilterView(request):
         if author_contains_query != '' and author_contains_query is not None:
             bk = bk.filter(author__icontains=author_contains_query)
 
-        if language_contains_query != '' and language_contains_query is not None:
-            bk = bk.filter(language__icontains=language_contains_query)
+        if lang_contains_query != '' and lang_contains_query is not None:
+            bk = bk.filter(language__icontains=lang_contains_query)
 
         if date_min != '' and date_min is not None:
             bk = bk.filter(date_pub__gte=date_min)
@@ -125,8 +131,13 @@ def new_book(request):
         pages = request.POST['pageCount_i']
         book_covers = request.POST['thumbnail_i']
         language = request.POST['language_i']
-        bk = Book(title=title, author=author, date_pub=date_pub, number_ISBN=number_ISBN,
-                  pages=pages, book_covers=book_covers, language=language)
+        bk = Book(title=title,
+                  author=author,
+                  date_pub=date_pub,
+                  number_ISBN=number_ISBN,
+                  pages=pages,
+                  book_covers=book_covers,
+                  language=language)
 
         bk.save()
         return HttpResponseRedirect('/')
