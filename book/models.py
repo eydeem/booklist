@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
-    author = models.CharField(max_length=100) #moze zmienie typ na ForeignKey
+    author = models.CharField(max_length=100)
     date_pub = models.DateField()
     number_ISBN = models.CharField(max_length=100)
     pages = models.IntegerField(blank = True, default=0)
@@ -14,4 +14,3 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('book-home')
-        #return reverse('book-home', kwargs={'pk':self.pk}) 

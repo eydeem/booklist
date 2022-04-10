@@ -2,11 +2,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 import datetime
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from numpy import number
 from .models import Book
 from django.shortcuts import render
 import requests
-from django.core.paginator import Paginator
 
 
 def home(request):
@@ -71,7 +69,6 @@ def BootStrapFilterView(request):
 
         if date_max != '' and date_max is not None:
             bk = bk.filter(date_pub__lte=date_max)
-        
 
         context = {
             "books": bk
