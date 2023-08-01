@@ -1,4 +1,4 @@
-Django==4.1.9
+Django==4.1.10
 requests==2.26.0
 django-crispy-forms==1.14.0
 gunicorn==20.1.0
